@@ -4,8 +4,8 @@
 class BaseField:
     value = None
 
-    def __init__(self, value):
-        self.value = value
+    def __init__(self):
+        pass
 
 
     def get_value(self):
