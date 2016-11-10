@@ -2,12 +2,23 @@ from fields.BaseField import BaseField
 
 
 class BaseModel:
+    attributes = {}
+
     def __init__(self, **kwargs):
-        for attribute in self.get_attributes():
+        self.set_attributes()
+        self.check_attributes(**kwargs)
+
+        self.__dict__.update(kwargs)
+
+    def set_attributes(self):
+        for attr_name in dir(self):
+            attr = getattr(self, attr_name)
+            if isinstance(attr, BaseField):
+                self.attributes[attr_name] = attr
+
+    def check_attributes(self, **kwargs):
+        for attribute in self.attributes.keys():
             if attribute not in kwargs:
                 raise Exception('Attribute \'{0}\' not exists in current model!'.format(attribute))
 
-            print(attribute)
-
-    def get_attributes(self):
-        return [attr for attr in dir(self) if isinstance(getattr(self, attr), BaseField)]
+            self.attributes[attribute].type_validation(kwargs[attribute])
