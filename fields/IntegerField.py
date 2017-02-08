@@ -2,7 +2,6 @@ from .BaseField import BaseField
 from validators import IntegerValidator
 
 
-
 class IntegerField(BaseField):
 
     def __init__(self, **kwargs):

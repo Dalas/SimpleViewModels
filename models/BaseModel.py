@@ -17,8 +17,8 @@ class BaseModel:
                 self.attributes[attr_name] = attr
 
     def check_attributes(self, **kwargs):
-        for attribute in self.attributes.keys():
-            if attribute not in kwargs:
+        for attribute in kwargs.keys():
+            if attribute not in self.attributes.keys():
                 raise Exception('Attribute \'{0}\' not exists in current model!'.format(attribute))
 
             self.attributes[attribute].type_validation(kwargs[attribute])
